@@ -45,7 +45,7 @@ public class NumberToRoman {
         }
 
         if (lastTwoDigits >= 40) {
-            return FOURTY_IN_ROMAN;
+            return FORTY_IN_ROMAN;
         }
         return repeatedLetter(TEN_IN_ROMAN, lastTwoDigits, 0, 10);
     }
