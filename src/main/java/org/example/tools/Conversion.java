@@ -1,4 +1,4 @@
-package org.example;
+package org.example.tools;
 
 import org.example.exception.NotBetweenOneAndTroisMille;
 
