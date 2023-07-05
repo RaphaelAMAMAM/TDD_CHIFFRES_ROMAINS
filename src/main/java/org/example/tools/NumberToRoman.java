@@ -1,6 +1,9 @@
 package org.example.tools;
 
+import static org.example.constant.RomanNumber.*;
+
 public class NumberToRoman {
+
 
 
     public String convertNumber(int number) {
@@ -14,18 +17,26 @@ public class NumberToRoman {
         int units = number%10;
 
         if (units == 9){
-            return "IX";
+            return NINE_IN_ROMAN;
         }
 
         if (units >= 5){
-            return "V" + "I".repeat(Math.max(0, units-5));
+            return FIVE_IN_ROMAN + repeatedLetter(ONE_IN_ROMAN, units, 5);
         }
 
-        if (units >= 4){
-            return "IV";
+        if (units == 4){
+            return FOUR_IN_ROMAN;
         }
 
-        return  "I".repeat(Math.max(0, units));
+        return repeatedLetter(ONE_IN_ROMAN, units, 5);
+    }
+
+    private String repeatedLetter(String roman, int units, int numberToSubstract) {
+        return repeatedLetter(roman, units, numberToSubstract, 1);
+    }
+
+    private String repeatedLetter(String roman, int units, int numberToSubstract, int divideBy) {
+        return roman.repeat(Math.max(0, (units - numberToSubstract) / divideBy));
     }
 
     private String writeDecades(int number) {
@@ -38,41 +49,41 @@ public class NumberToRoman {
         }
 
         if (lastTwoDigits >= 90){
-            return "XC";
+            return NINETY_IN_ROMAN;
         }
 
         if (lastTwoDigits >= 50){
-            return "L" + "X".repeat(Math.max(0, (lastTwoDigits-50) / 10));
+            return FIFTY_IN_ROMAN + repeatedLetter(TEN_IN_ROMAN, lastTwoDigits, 50, 10);
         }
 
         if (lastTwoDigits >=40){
-            return "XL";
+            return FOURTY_IN_ROMAN;
         }
-        return "X".repeat(Math.max(0, (lastTwoDigits) / 10));
+        return repeatedLetter(TEN_IN_ROMAN, lastTwoDigits, 0, 10);
     }
 
     private  String writeThousands(int number){
 
         int restAfterThousands = number % 1000;
-        String thousands = "M".repeat(Math.max(0, number / 1000));
+        String thousands = THOUSAND_IN_ROMAN.repeat(Math.max(0, number / 1000));
         if (restAfterThousands >= 900){
-            return thousands + "CM";
+            return thousands + NINE_HUNDRED_IN_ROMAN;
         }
 
         if (restAfterThousands >= 500){
             int hundredAfter500 = (restAfterThousands-500)/100;
-            String hundred = thousands + "D";
-            hundred += "C".repeat(Math.max(0, hundredAfter500));
+            String hundred = thousands + FIVE_HUNDRED_IN_ROMAN;
+            hundred += repeatedLetter(ONE_HUNDRED_IN_ROMAN, hundredAfter500, 0);
             return hundred;
         }
 
         if (restAfterThousands >= 400){
-            return thousands + "CD";
+            return thousands + FOUR_HUNDRED_IN_ROMAN;
         }
 
         if (restAfterThousands >= 100){
             int hundredAfter100 = (restAfterThousands)/100;
-            return thousands + "C".repeat(hundredAfter100);
+            return thousands + repeatedLetter(ONE_HUNDRED_IN_ROMAN, hundredAfter100, 0);
         }
         return thousands;
     }
