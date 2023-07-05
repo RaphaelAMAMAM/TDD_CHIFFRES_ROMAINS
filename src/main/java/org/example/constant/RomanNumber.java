@@ -1,6 +1,10 @@
 package org.example.constant;
 
 public class RomanNumber {
+
+    private RomanNumber() {
+    }
+
     public static final String NINE_IN_ROMAN = "IX";
     public static final String FIVE_IN_ROMAN = "V";
     public static final String FOUR_IN_ROMAN = "IV";
